@@ -9,12 +9,16 @@ include {
   path = find_in_parent_folders()
 }
 
+dependency "cluster" {
+  config_path = "../../eks-cluster/nl-api-preprod"
+}
+
 inputs = {
   role_name                              = "AmazonEKSLoadBalancerControllerRole"
   attach_load_balancer_controller_policy = true
   oidc_providers = {
     ex = {
-      provider_arn               = "arn:aws:iam::825391943801:oidc-provider/oidc.eks.us-west-2.amazonaws.com/id/68B81C755684567BB61F73987CBA3912"
+      provider_arn               = dependency.cluster.outputs.oidc_provider_arn
       namespace_service_accounts = ["kube-system:aws-load-balancer-controller"]
     }
   }
