@@ -54,8 +54,19 @@ inputs = {
       max_size     = 1
       desired_size = 1
 
-      instance_types = ["t3.large"]
+      ami_type       = "AL2_ARM_64"
+      instance_types = ["t4g.large"]
       capacity_type  = "SPOT"
+
+      block_device_mappings = {
+        xvda = {
+          device_name = "/dev/xvda"
+          ebs = {
+            volume_size = 20
+            volume_type = "gp3"
+          }
+        }
+      }
     }
   }
 
