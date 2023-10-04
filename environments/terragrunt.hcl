@@ -14,7 +14,7 @@ remote_state {
 # This block creates the file path in the .terragrunt-cache folder so that backend is initialized
 generate "terraform" {
   path      = "versions.tf"
-  if_exists = "overwrite_terragrunt"
+  if_exists = "overwrite"
   contents  = <<EOF
 terraform {
   backend "s3" {}
