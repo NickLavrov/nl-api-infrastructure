@@ -10,9 +10,20 @@ resource "helm_release" "argocd" {
 
 provider "helm" {
   kubernetes {
-    config_path = "~/.kube/config"
+    host                   = data.aws_eks_cluster.this.endpoint
+    cluster_ca_certificate = base64decode(data.aws_eks_cluster.this.certificate_authority[0].data)
+    token                  = data.aws_eks_cluster_auth.this.token
   }
 }
+
+data "aws_eks_cluster_auth" "this" {
+  name = var.cluster_name
+}
+
+data "aws_eks_cluster" "this" {
+  name = var.cluster_name
+}
+
 terraform {
   # backend "s3" {}
   required_version = ">= 1.0.0"

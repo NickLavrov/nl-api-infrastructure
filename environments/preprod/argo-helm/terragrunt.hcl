@@ -15,4 +15,5 @@ dependency "cluster" {
 }
 
 inputs = {
+  cluster_name = dependency.cluster.outputs.cluster_name
 }
